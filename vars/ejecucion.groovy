@@ -11,11 +11,9 @@ def call(){
                     echo "HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}"   
                     echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"                             
                     if (params.HERRAMIENTA == 'gradle'){
-                        	def ejecucion = load 'gradle.groovy'
-    	                    ejecucion.call()
+                        	gradle.call()
                     } else {
-                        	def ejecucion = load 'maven.groovy'
-    	                    ejecucion.call()                    
+    	                    maven.call()                    
                     }
 
                     }
