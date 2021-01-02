@@ -19,12 +19,8 @@ pipeline {
 
                                           
                 if (params.HERRAMIENTA == 'gradle'){
-                    	//def ejecucion = load 'gradle.groovy'
-	                    //ejecucion.call()
                         gradle.call(stage);
                 } else {
-                    	//def ejecucion = load 'maven.groovy'
-	                    //ejecucion.call()   
                         maven.call();                 
                 }
 
@@ -35,14 +31,11 @@ pipeline {
 
     post {
         success{
-            //: [Nombre Alumno][Nombre Job][buildTool] Ejecución exitosa
-            slackSend color: 'good', message: "[Rodrigo Zuniga][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecucion exitosa"           
+            slackSend color: 'good', message: "[Andrés Aldana][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecucion exitosa"           
         }
 
         failure{
-            //[Nombre Alumno][Nombre Job][buildTool] Ejecución fallida en stage [Stage]
-            //la variable env.TAREA esta definida en los groovy
-            slackSend color: 'danger', message: "[Rodrigo Zuniga][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecución fallida en stage [${env.TAREA}]"                   
+            slackSend color: 'danger', message: "[Andrés Aldana][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecución fallida en stage [${env.TAREA}]"                   
         }
     }
 
