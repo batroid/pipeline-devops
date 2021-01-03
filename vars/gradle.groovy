@@ -1,8 +1,4 @@
-/*
-    forma de invocación de método call:
-    def ejecucion = load 'script.groovy'
-    ejecucion.call()
-*/
+
 
 def call(stage) {
 
@@ -21,8 +17,9 @@ def call(stage) {
         		//corresponde a lo configurado en sistema Jenkins
         		withSonarQubeEnv('sonar-server') {
             			bat "${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"
-        	}
-    	}
+        		}
+        }
+    }
 		
 	if (stage.contains('Run') || stage == ''){
 		stage('Run') {
@@ -47,3 +44,6 @@ def call(stage) {
 	}
 
 }
+	
+return this;
+
