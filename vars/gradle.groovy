@@ -23,7 +23,8 @@ def call(stageOptions) {
 		
 	if (stageOptions.contains('Rest') || stageOptions == ''){
  		stage('Rest') {
-        		sh 'curl -X GET "http://localhost:8888/rest/mscovid/test?msg=testing"'
+			echo 'ejecutando llamada REST'
+        		//sh 'curl -X GET "http://localhost:8888/rest/mscovid/test?msg=testing"'
     		}
 	}
 		
