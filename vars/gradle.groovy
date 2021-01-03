@@ -1,15 +1,15 @@
 
 
-def call(stage) {
+def call(stageOptions) {
 
-	if (stage.contains('Build') || stage.contains('Test') || stage == ''){
+	if (stageOptions.contains('Build') || stageOptions.contains('Test') || stageOptions == ''){
 		stage('Build & Test') {
 	        	env.TASK = env.STAGE_NAME
         		sh './gradlew clean build'
     		}
 	}
     
-	if (stage.contains('Sonar') || stage == ''){
+	if (stageOptions.contains('Sonar') || stageOptions == ''){
 		stage('Sonar') {
         		env.TASK = env.STAGE_NAME
 		        //corresponde al scanner configurado en global tools Jenkins
@@ -21,7 +21,7 @@ def call(stage) {
         }
     }
 		
-	if (stage.contains('Run') || stage == ''){
+	if (stageOptions.contains('Run') || stageOptions == ''){
 		stage('Run') {
         		env.TASK = env.STAGE_NAME
         		sh './gradlew bootRun &'
@@ -29,14 +29,14 @@ def call(stage) {
     		}
 	}
 		
-	if (stage.contains('Run') || stage == ''){
- 		stage('Run') {
+	if (stageOptions.contains('Rest') || stageOptions == ''){
+ 		stage('Rest') {
         		env.TASK = env.STAGE_NAME
         		sh 'curl -X GET "http://localhost:8888/rest/mscovid/test?msg=testing"'
     		}
 	}
 		
-	if (stage.contains('Run') || stage == ''){
+	if (stageOptions.contains('Run') || stageOptions == ''){
 		stage('Nexus') {
         		env.TASK = env.STAGE_NAME
 		        nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-repo', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'C:/Proyectos/ejemplo-gradle/build/libs/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1']]]
