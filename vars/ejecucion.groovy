@@ -29,7 +29,7 @@ pipeline {
         }
     }
 
-    post {
+    /*post {
         success{
             slackSend color: 'good', message: "[Andrés Aldana][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecucion exitosa"           
         }
@@ -37,7 +37,7 @@ pipeline {
         failure{
             slackSend color: 'danger', message: "[Andrés Aldana][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecución fallida en stage [${env.TAREA}]"                   
         }
-    }
+    }*/
 
 }
 
