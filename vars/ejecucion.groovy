@@ -1,27 +1,23 @@
 def call(){
 pipeline {
     agent any
-    parameters { 
-        choice(name: 'HERRAMIENTA', choices: ['gradle', 'maven'], description: 'opcion de compilacion')
-        string(name: 'stage' , defaultValue: '', description: '')
-    }
     
     stages {
         stage('Pipeline') {
             steps {
                 script {
-                //segun el valor del parametro se debe llamar a gradle o maven
-                env.TAREA = ''
-                echo "1.-HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}" 
-                echo "2.-PARAMETROS SELECCIONADOS: ${stage}"   
-                echo "3.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
-                echo "4.-Rama ${env.BRANCH_NAME}" 
+                sh 'env'
+                env.TAREA = '' 
+                echo "-RUNNING ${env.BUILD_ID} on ${env.JENKINS_URL}" 
+                echo "-GIT_BRANCH ${env.GIT_BRANCH}"   
 
                                           
-                if (params.HERRAMIENTA == 'gradle'){
-                        gradle.call(stage);
+                if (env.GIT_BRANCH == "develop" || env.GIT_BRANCH == "feature"){
+                        gradleci.call();
+                } else if (env.GIT_BRANCH.contains("release")){  
+                        gradlecd.call();                 
                 } else {
-                        maven.call();                 
+                    echo " La rama <${env.GIT_BRANCH}> no se proceso" 
                 }
 
                 }
@@ -29,16 +25,17 @@ pipeline {
         }
     }
 
+
     /*post {
         success{
-            slackSend color: 'good', message: "[Andrés Aldana][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecucion exitosa"           
+            slackSend color: 'good', message: "[Andres Aldana][${env.JOB_NAME}][${env.GIT_BRANCH}]Ejecucion exitosa"           
         }
 
         failure{
-            slackSend color: 'danger', message: "[Andrés Aldana][${env.JOB_NAME}][${env.HERRAMIENTA}]Ejecución fallida en stage [${env.TAREA}]"                   
+            slackSend color: 'danger', message: "[Andres Aldana][${env.JOB_NAME}][${env.GIT_BRANCH}]Ejecución fallida en stage [${env.TAREA}]"                   
         }
-    }*/
-
+    }
+*/
 }
 
 
